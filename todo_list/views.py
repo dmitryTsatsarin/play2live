@@ -1,6 +1,6 @@
 from common.views import Play2LiveGenericView
 from todo_list.models import Todo
-from todo_list.serializers import GetTodoListSerializer
+from todo_list.serializers import GetTodoListSerializer, CreateTodoSerializer
 
 
 class GetTodoListView(Play2LiveGenericView):
@@ -11,3 +11,23 @@ class GetTodoListView(Play2LiveGenericView):
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
+
+class CreateTodoView(Play2LiveGenericView):
+    serializer_class = CreateTodoSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class UpdateDeleteTodoView(Play2LiveGenericView):
+    serializer_class = CreateTodoSerializer
+
+    def get_queryset(self):
+        return Todo.objects.filter()  # TODO: add some filtration by user
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
