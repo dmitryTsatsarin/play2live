@@ -31,10 +31,12 @@ class GetTodoListTestCase(Play2LiveTestCase):
         todo_item = TodoFactory.create(title='test1', is_checked=True)
         data = {
             'title': 'test100',
+            'is_checked': False,
         }
         response = self.client.put('/api/todo_list/entry/%s/' % todo_item.id, data=data, format="json")
         self.assertEquals(response.status_code, rest_status.HTTP_200_OK)
         self.assertEquals(Todo.objects.get().title, 'test100')
+        self.assertEquals(Todo.objects.get().is_checked, False)
 
 
     def test_delete_entry(self):
